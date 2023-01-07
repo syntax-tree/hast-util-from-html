@@ -3,7 +3,6 @@
  */
 
 import fs from 'node:fs/promises'
-import path from 'node:path'
 import test from 'tape'
 import {VFile} from 'vfile'
 import {toVFile, read} from 'to-vfile'
@@ -321,7 +320,7 @@ test('parse errors: coverage', async (t) => {
 
 test('parse-errors: working', async (t) => {
   let index = -1
-  const root = path.join('test', 'parse-error')
+  const root = new URL('parse-error/', import.meta.url)
   const fixtures = await fs.readdir(root)
 
   t.test('surrogate-in-input-stream', (t) => {
@@ -379,15 +378,13 @@ test('parse-errors: working', async (t) => {
       return
     }
 
-    const fp = path.join(root, fixture)
-
     setImmediate(next) // Queue next.
 
     t.test(fixture, async (t) => {
-      const file = await read(path.join(fp, 'index.html'), 'utf8')
+      const file = await read(new URL(fixture + '/index.html', root), 'utf8')
       /** @type {Array<Error>} */
       const messages = JSON.parse(
-        String(await fs.readFile(path.join(fp, 'messages.json')))
+        String(await fs.readFile(new URL(fixture + '/messages.json', root)))
       )
 
       file.dirname = ''
