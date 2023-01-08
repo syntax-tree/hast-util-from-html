@@ -2,15 +2,16 @@
  * @typedef {import('vfile-message').VFileMessage} VFileMessage
  */
 
+import assert from 'node:assert/strict'
 import fs from 'node:fs/promises'
-import test from 'tape'
+import test from 'node:test'
 import {VFile} from 'vfile'
 import {toVFile, read} from 'to-vfile'
 import {fromHtml} from '../index.js'
 import {errors as rerrors} from '../lib/errors.js'
 
-test('hast-util-from-html', (t) => {
-  t.deepEqual(
+test('hast-util-from-html', () => {
+  assert.deepEqual(
     fromHtml('a'),
     {
       type: 'root',
@@ -48,7 +49,7 @@ test('hast-util-from-html', (t) => {
     'should work'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     fromHtml('a', {fragment: true}),
     {
       type: 'root',
@@ -80,7 +81,7 @@ test('hast-util-from-html', (t) => {
     }
   })
 
-  t.deepEqual(
+  assert.deepEqual(
     JSON.parse(JSON.stringify(args)),
     [
       {
@@ -111,7 +112,7 @@ test('hast-util-from-html', (t) => {
     missingDoctype: 0
   })
 
-  t.deepEqual(
+  assert.deepEqual(
     JSON.stringify(args),
     undefined,
     'should support `options.*` to level warnings (w/ numbers)'
@@ -125,7 +126,7 @@ test('hast-util-from-html', (t) => {
     missingDoctype: false
   })
 
-  t.deepEqual(
+  assert.deepEqual(
     JSON.stringify(args),
     undefined,
     'should support `options.*` to level warnings (w/ booleans)'
@@ -139,7 +140,7 @@ test('hast-util-from-html', (t) => {
     missingDoctype: false
   })
 
-  t.deepEqual(
+  assert.deepEqual(
     JSON.parse(JSON.stringify(args)),
     [
       {
@@ -170,7 +171,7 @@ test('hast-util-from-html', (t) => {
     missingDoctype: false
   })
 
-  t.deepEqual(
+  assert.deepEqual(
     JSON.parse(JSON.stringify(args)),
     [
       {
@@ -201,7 +202,7 @@ test('hast-util-from-html', (t) => {
     missingDoctype: false
   })
 
-  t.deepEqual(
+  assert.deepEqual(
     JSON.parse(JSON.stringify(args)),
     [
       {
@@ -232,7 +233,7 @@ test('hast-util-from-html', (t) => {
     missingDoctype: false
   })
 
-  t.deepEqual(
+  assert.deepEqual(
     JSON.parse(JSON.stringify(args)),
     [
       {
@@ -262,7 +263,7 @@ test('hast-util-from-html', (t) => {
     }
   })
 
-  t.deepEqual(
+  assert.deepEqual(
     JSON.parse(JSON.stringify(args)),
     [
       {
@@ -285,13 +286,11 @@ test('hast-util-from-html', (t) => {
     ],
     'should support vfiles'
   )
-
-  t.end()
 })
 
 // Related to https://github.com/inikulin/parse5/issues/255
 // and https://github.com/inikulin/parse5/pull/257.
-test('parse errors: coverage', async (t) => {
+test('parse errors: coverage', async () => {
   await fs.writeFile(
     new URL('error-codes-from-p5.js', import.meta.url),
     '// @ts-nocheck\n/** @type {Record<string, string>} */\n' +
@@ -309,21 +308,17 @@ test('parse errors: coverage', async (t) => {
   // @ts-ignore: this errors when tests did not run before build.
   const {ERR: p5errors} = await import('./error-codes-from-p5.js')
 
-  t.deepEqual(
+  assert.deepEqual(
     Object.keys(p5errors).sort(),
     Object.keys(rerrors).sort(),
     'all codes from `parse5` should be covered by `hast-util-from-html`'
   )
-
-  t.end()
 })
 
 test('parse-errors: working', async (t) => {
-  let index = -1
   const root = new URL('parse-error/', import.meta.url)
-  const fixtures = await fs.readdir(root)
 
-  t.test('surrogate-in-input-stream', (t) => {
+  await t.test('surrogate-in-input-stream', () => {
     const file = toVFile({
       path: 'index.html',
       value: '<!doctype html>\n' + String.fromCharCode(0xd8_00)
@@ -338,7 +333,7 @@ test('parse-errors: working', async (t) => {
       }
     })
 
-    t.deepEqual(
+    assert.deepEqual(
       JSON.parse(JSON.stringify(actual)),
       [
         {
@@ -361,26 +356,20 @@ test('parse-errors: working', async (t) => {
       ],
       'should emit messages'
     )
-
-    t.end()
   })
 
   /* Check the next fixture. */
-  function next() {
-    const fixture = fixtures[++index]
+  let index = -1
+  const fixtures = await fs.readdir(root)
 
-    if (!fixture) {
-      return
-    }
+  while (++index < fixtures.length) {
+    const fixture = fixtures[index]
 
     if (fixture.charAt(0) === '.') {
-      setImmediate(next)
-      return
+      continue
     }
 
-    setImmediate(next) // Queue next.
-
-    t.test(fixture, async (t) => {
+    await t.test(fixture, async () => {
       const file = await read(new URL(fixture + '/index.html', root), 'utf8')
       /** @type {Array<Error>} */
       const messages = JSON.parse(
@@ -397,15 +386,11 @@ test('parse-errors: working', async (t) => {
         }
       })
 
-      t.deepEqual(
+      assert.deepEqual(
         JSON.parse(JSON.stringify(actual)),
         messages,
         'should emit messages for `' + fixture + '`'
       )
-
-      t.end()
     })
   }
-
-  next()
 })
