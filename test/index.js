@@ -8,9 +8,16 @@ import test from 'node:test'
 import {VFile} from 'vfile'
 import {toVFile, read} from 'to-vfile'
 import {fromHtml} from '../index.js'
+import * as mod from '../index.js'
 import {errors as rerrors} from '../lib/errors.js'
 
-test('hast-util-from-html', () => {
+test('fromHtml', () => {
+  assert.deepEqual(
+    Object.keys(mod).sort(),
+    ['fromHtml'],
+    'should expose the public api'
+  )
+
   assert.deepEqual(
     fromHtml('a'),
     {
