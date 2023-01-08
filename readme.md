@@ -17,13 +17,17 @@
 *   [Install](#install)
 *   [Use](#use)
 *   [API](#api)
-    *   [`fromHtml(file[, options])`](#fromhtmlfile-options)
+    *   [`fromHtml(value[, options])`](#fromhtmlvalue-options)
+    *   [`Options`](#options)
+    *   [`OnError`](#onerror)
+    *   [`ErrorCode`](#errorcode)
+    *   [`ErrorSeverity`](#errorseverity)
 *   [Examples](#examples)
     *   [Example: fragment versus document](#example-fragment-versus-document)
     *   [Example: whitespace around and inside `<html>`](#example-whitespace-around-and-inside-html)
     *   [Example: parse errors](#example-parse-errors)
 *   [Syntax](#syntax)
-*   [Types](#types)
+*   [Types](#types-2)
 *   [Compatibility](#compatibility)
 *   [Security](#security)
 *   [Related](#related)
@@ -55,7 +59,7 @@ It turns hast into HTML.
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 14.14+, 16.0+, or 18.0+), install with [npm][]:
+In Node.js (version 14.14+ and 16.0+), install with [npm][]:
 
 ```sh
 npm install hast-util-from-html
@@ -109,23 +113,31 @@ Yields:
 
 ## API
 
-This package exports the identifier `fromHtml`.
+This package exports the identifier [`fromHtml`][fromhtml].
 There is no default export.
 
-### `fromHtml(file[, options])`
+### `fromHtml(value[, options])`
 
-Parse `file` ([`VFile`][vfile] or anything that can be given to `VFile`) as hast
-([`Root`][root]).
+Turn serialized HTML into a hast tree.
 
-##### `options`
+###### Parameters
 
-Configuration (optional).
+<!-- To do: update link when `vfile` has new docs. -->
 
-###### `options.fragment`
+*   `value` ([`Compatible`][compatible])
+    — serialized HTML to parse
+*   `options` ([`Options`][options], optional)
+    — configuration
 
-Whether to parse as a fragment (`boolean`, default: `false`).
-The default is to expect a whole document.
-In document mode, unopened `html`, `head`, and `body` elements are opened.
+###### Returns
+
+Tree ([`Root`][root]).
+
+### `Options`
+
+Configuration (TypeScript type).
+
+##### Fields
 
 ###### `options.space`
 
@@ -146,19 +158,24 @@ exiting it.
 ###### `options.verbose`
 
 Add extra positional info about attributes, start tags, and end tags
-(`boolean`, default: `false`)
+(`boolean`, default: `false`).
+
+###### `options.fragment`
+
+Whether to parse as a fragment (`boolean`, default: `false`).
+The default is to expect a whole document.
+In document mode, unopened `html`, `head`, and `body` elements are opened.
 
 ###### `options.onerror`
 
 Function called when encountering [HTML parse errors][parse-errors]
-(`(error: VFileMessage) => void`, optional).
-Called with a [`VFileMessage`][vfile-message].
+([`OnError`][onerror], optional).
 
-Specific rules can be turned off by setting their identifiers directly in
-`options` to `false` (or `0`).
-The default, when `onerror` is passed, is `true` (or `1`), and means that
-messages are warnings.
-Rules can also be configured with `2`, to turn them into fatal errors.
+###### `options[key in ErrorCode]`
+
+Specific parse errors can be configured by setting their identifiers (see
+[`ErrorCode`][errorcode]) as keys directly in `options` to an
+[`ErrorSeverity`][errorseverity] as value.
 
 The list of parse errors:
 
@@ -227,9 +244,50 @@ The list of parse errors:
 
 <!-- parse-error end -->
 
-##### Returns
+### `OnError`
 
-Tree ([`Root`][root]).
+Function called when encountering [HTML parse errors][parse-errors].
+
+###### Parameters
+
+*   `error` ([`VFileMessage`][vfilemessage])
+    — message
+
+###### Returns
+
+Nothing (`void`).
+
+### `ErrorCode`
+
+Known names of parse errors (TypeScript type).
+
+###### Types
+
+```ts
+type ErrorCode =
+  | 'abandonedHeadElementChild'
+  | 'abruptClosingOfEmptyComment'
+  | 'abruptDoctypePublicIdentifier'
+  // … see readme on `options[key in ErrorCode]` above.
+```
+
+### `ErrorSeverity`
+
+Error severity (TypeScript type).
+
+###### Types
+
+```ts
+export type ErrorSeverity =
+  // Turn the parse error off:
+  | 0
+  | false
+  // Turn the parse error into a warning:
+  | 1
+  | true
+  // Turn the parse error into an actual error: processing stops.
+  | 2
+```
 
 ## Examples
 
@@ -393,14 +451,14 @@ followed by browsers such as Chrome and Firefox.
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional type `Options`, `OnError`, `ErrorCode`, and
-`ErrorSeverity`.
+It exports the additional type [`Options`][options], [`OnError`][onerror],
+[`ErrorCode`][errorcode], and [`ErrorSeverity`][errorseverity].
 
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with all maintained
 versions of Node.js.
-As of now, that is Node.js 14.14+, 16.0+, and 18.0+.
+As of now, that is Node.js 14.14+ and 16.0+.
 Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Security
@@ -494,10 +552,6 @@ abide by its terms.
 
 [xast-util-from-xml]: https://github.com/syntax-tree/xast-util-from-xml
 
-[vfile]: https://github.com/vfile/vfile
-
-[vfile-message]: https://github.com/vfile/vfile-message
-
 [rehype-parse]: https://github.com/rehypejs/rehype/tree/main/packages/rehype-parse#readme
 
 [rehype-format]: https://github.com/rehypejs/rehype-format
@@ -505,3 +559,17 @@ abide by its terms.
 [parse5]: https://github.com/inikulin/parse5
 
 [parse-errors]: https://html.spec.whatwg.org/multipage/parsing.html#parse-errors
+
+[vfilemessage]: https://github.com/vfile/vfile-message#vfilemessagereason-place-origin
+
+[fromhtml]: #fromhtmlvalue-options
+
+[options]: #options
+
+[onerror]: #onerror
+
+[errorcode]: #errorcode
+
+[errorseverity]: #errorseverity
+
+[compatible]: https://github.com/vfile/vfile/blob/03efac7/lib/index.js#L16
