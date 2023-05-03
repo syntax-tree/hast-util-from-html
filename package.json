@@ -36,7 +36,8 @@
     "@types/hast": "^2.0.0",
     "hast-util-from-parse5": "^7.0.0",
     "parse5": "^7.0.0",
-    "vfile": "^5.0.0"
+    "vfile": "^5.0.0",
+    "vfile-message": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^18.0.0",
