@@ -6,22 +6,20 @@ import assert from 'node:assert/strict'
 import fs from 'node:fs/promises'
 import process from 'node:process'
 import test from 'node:test'
+import {read} from 'to-vfile'
 import {VFile} from 'vfile'
-import {toVFile, read} from 'to-vfile'
-import {fromHtml} from '../index.js'
-import * as mod from '../index.js'
 import {errors as rerrors} from '../lib/errors.js'
+import {fromHtml} from '../index.js'
 
-test('fromHtml', () => {
-  assert.deepEqual(
-    Object.keys(mod).sort(),
-    ['fromHtml'],
-    'should expose the public api'
-  )
+test('fromHtml', async function (t) {
+  await t.test('should expose the public api', async function () {
+    assert.deepEqual(Object.keys(await import('../index.js')).sort(), [
+      'fromHtml'
+    ])
+  })
 
-  assert.deepEqual(
-    fromHtml('a'),
-    {
+  await t.test('should work', async function () {
+    assert.deepEqual(fromHtml('a'), {
       type: 'root',
       children: [
         {
@@ -53,13 +51,11 @@ test('fromHtml', () => {
         start: {line: 1, column: 1, offset: 0},
         end: {line: 1, column: 2, offset: 1}
       }
-    },
-    'should work'
-  )
+    })
+  })
 
-  assert.deepEqual(
-    fromHtml('a', {fragment: true}),
-    {
+  await t.test('should support `options.fragment`', async function () {
+    assert.deepEqual(fromHtml('a', {fragment: true}), {
       type: 'root',
       children: [
         {
@@ -76,22 +72,20 @@ test('fromHtml', () => {
         start: {line: 1, column: 1, offset: 0},
         end: {line: 1, column: 2, offset: 1}
       }
-    },
-    'should support `options.fragment`'
-  )
-
-  /** @type {unknown} */
-  let args
-
-  fromHtml('a', {
-    onerror(...parameters) {
-      args = parameters
-    }
+    })
   })
 
-  assert.deepEqual(
-    JSON.parse(JSON.stringify(args)),
-    [
+  await t.test('should support `options.onerror`', async function () {
+    /** @type {unknown} */
+    let args
+
+    fromHtml('a', {
+      onerror(...parameters) {
+        args = parameters
+      }
+    })
+
+    assert.deepEqual(JSON.parse(JSON.stringify(args)), [
       {
         column: 1,
         fatal: false,
@@ -107,49 +101,55 @@ test('fromHtml', () => {
         source: 'parse-error',
         note: 'Expected a `<!doctype html>` before anything else'
       }
-    ],
-    'should support `options.onerror`'
-  )
-
-  args = undefined
-  fromHtml('a', {
-    onerror(...parameters) {
-      args = parameters
-    },
-    missingDoctype: 0
+    ])
   })
 
-  assert.deepEqual(
-    JSON.stringify(args),
-    undefined,
-    'should support `options.*` to level warnings (w/ numbers)'
+  await t.test(
+    'should support `options.*` to level warnings (w/ numbers)',
+    async function () {
+      /** @type {unknown} */
+      let args
+
+      fromHtml('a', {
+        onerror(...parameters) {
+          args = parameters
+        },
+        missingDoctype: 0
+      })
+
+      assert.deepEqual(JSON.stringify(args), undefined)
+    }
   )
 
-  args = undefined
-  fromHtml('a', {
-    onerror(...parameters) {
-      args = parameters
-    },
-    missingDoctype: false
-  })
+  await t.test(
+    'should support `options.*` to level warnings (w/ booleans)',
+    async function () {
+      /** @type {unknown} */
+      let args
 
-  assert.deepEqual(
-    JSON.stringify(args),
-    undefined,
-    'should support `options.*` to level warnings (w/ booleans)'
+      fromHtml('a', {
+        onerror(...parameters) {
+          args = parameters
+        },
+        missingDoctype: false
+      })
+
+      assert.deepEqual(JSON.stringify(args), undefined)
+    }
   )
 
-  args = undefined
-  fromHtml('&x;', {
-    onerror(...parameters) {
-      args = parameters
-    },
-    missingDoctype: false
-  })
+  await t.test('should support warnings with URLs', async function () {
+    /** @type {unknown} */
+    let args
 
-  assert.deepEqual(
-    JSON.parse(JSON.stringify(args)),
-    [
+    fromHtml('&x;', {
+      onerror(...parameters) {
+        args = parameters
+      },
+      missingDoctype: false
+    })
+
+    assert.deepEqual(JSON.parse(JSON.stringify(args)), [
       {
         column: 3,
         fatal: false,
@@ -166,113 +166,122 @@ test('fromHtml', () => {
         note: 'Unexpected character reference. Expected known named character references',
         url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unknown-named-character-reference'
       }
-    ],
-    'should support warnings with URLs'
-  )
-
-  args = undefined
-  fromHtml('</x/>', {
-    onerror(...parameters) {
-      args = parameters
-    },
-    missingDoctype: false
+    ])
   })
 
-  assert.deepEqual(
-    JSON.parse(JSON.stringify(args)),
-    [
-      {
-        column: 5,
-        fatal: false,
-        message: 'Unexpected slash at end of closing tag',
-        line: 1,
-        name: '1:5-1:5',
-        place: {
-          start: {line: 1, column: 5, offset: 4},
-          end: {line: 1, column: 5, offset: 4}
+  await t.test(
+    'should support warnings with character codes',
+    async function () {
+      /** @type {unknown} */
+      let args
+
+      fromHtml('</x/>', {
+        onerror(...parameters) {
+          args = parameters
         },
-        reason: 'Unexpected slash at end of closing tag',
-        ruleId: 'end-tag-with-trailing-solidus',
-        source: 'parse-error',
-        note: 'Unexpected `/`. Expected `>` instead',
-        url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-end-tag-with-trailing-solidus'
-      }
-    ],
-    'should support warnings with character codes'
-  )
+        missingDoctype: false
+      })
 
-  args = undefined
-  fromHtml('<`>', {
-    onerror(...parameters) {
-      args = parameters
-    },
-    missingDoctype: false
-  })
-
-  assert.deepEqual(
-    JSON.parse(JSON.stringify(args)),
-    [
-      {
-        column: 2,
-        fatal: false,
-        message: 'Invalid first character in tag name',
-        line: 1,
-        name: '1:2-1:2',
-        place: {
-          start: {line: 1, column: 2, offset: 1},
-          end: {line: 1, column: 2, offset: 1}
-        },
-        reason: 'Invalid first character in tag name',
-        ruleId: 'invalid-first-character-of-tag-name',
-        source: 'parse-error',
-        note: 'Unexpected `` ` ``. Expected an ASCII letter instead',
-        url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-invalid-first-character-of-tag-name'
-      }
-    ],
-    'should support warnings with character codes (`` ` ``)'
-  )
-
-  args = undefined
-  fromHtml('\0', {
-    onerror(...parameters) {
-      args = parameters
-    },
-    missingDoctype: false
-  })
-
-  assert.deepEqual(
-    JSON.parse(JSON.stringify(args)),
-    [
-      {
-        column: 1,
-        fatal: false,
-        message: 'Unexpected NULL character',
-        line: 1,
-        name: '1:1-1:1',
-        place: {
-          start: {line: 1, column: 1, offset: 0},
-          end: {line: 1, column: 1, offset: 0}
-        },
-        reason: 'Unexpected NULL character',
-        ruleId: 'unexpected-null-character',
-        source: 'parse-error',
-        note: 'Unexpected code point `0x0`. Do not use NULL characters in HTML',
-        url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-null-character'
-      }
-    ],
-    'should support warnings with decimal character codes'
-  )
-
-  args = undefined
-  fromHtml(new VFile({value: '</x/>', path: 'example.html'}), {
-    onerror(...parameters) {
-      args = parameters
+      assert.deepEqual(JSON.parse(JSON.stringify(args)), [
+        {
+          column: 5,
+          fatal: false,
+          message: 'Unexpected slash at end of closing tag',
+          line: 1,
+          name: '1:5-1:5',
+          place: {
+            start: {line: 1, column: 5, offset: 4},
+            end: {line: 1, column: 5, offset: 4}
+          },
+          reason: 'Unexpected slash at end of closing tag',
+          ruleId: 'end-tag-with-trailing-solidus',
+          source: 'parse-error',
+          note: 'Unexpected `/`. Expected `>` instead',
+          url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-end-tag-with-trailing-solidus'
+        }
+      ])
     }
-  })
+  )
 
-  assert.deepEqual(
-    JSON.parse(JSON.stringify(args)),
-    [
+  await t.test(
+    'should support warnings with character codes (`` ` ``)',
+    async function () {
+      /** @type {unknown} */
+      let args
+
+      fromHtml('<`>', {
+        onerror(...parameters) {
+          args = parameters
+        },
+        missingDoctype: false
+      })
+
+      assert.deepEqual(JSON.parse(JSON.stringify(args)), [
+        {
+          column: 2,
+          fatal: false,
+          message: 'Invalid first character in tag name',
+          line: 1,
+          name: '1:2-1:2',
+          place: {
+            start: {line: 1, column: 2, offset: 1},
+            end: {line: 1, column: 2, offset: 1}
+          },
+          reason: 'Invalid first character in tag name',
+          ruleId: 'invalid-first-character-of-tag-name',
+          source: 'parse-error',
+          note: 'Unexpected `` ` ``. Expected an ASCII letter instead',
+          url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-invalid-first-character-of-tag-name'
+        }
+      ])
+    }
+  )
+
+  await t.test(
+    'should support warnings with decimal character codes',
+    async function () {
+      /** @type {unknown} */
+      let args
+
+      fromHtml('\0', {
+        onerror(...parameters) {
+          args = parameters
+        },
+        missingDoctype: false
+      })
+
+      assert.deepEqual(JSON.parse(JSON.stringify(args)), [
+        {
+          column: 1,
+          fatal: false,
+          message: 'Unexpected NULL character',
+          line: 1,
+          name: '1:1-1:1',
+          place: {
+            start: {line: 1, column: 1, offset: 0},
+            end: {line: 1, column: 1, offset: 0}
+          },
+          reason: 'Unexpected NULL character',
+          ruleId: 'unexpected-null-character',
+          source: 'parse-error',
+          note: 'Unexpected code point `0x0`. Do not use NULL characters in HTML',
+          url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-null-character'
+        }
+      ])
+    }
+  )
+
+  await t.test('should support vfiles', async function () {
+    /** @type {unknown} */
+    let args
+
+    fromHtml(new VFile({value: '</x/>', path: 'example.html'}), {
+      onerror(...parameters) {
+        args = parameters
+      }
+    })
+
+    assert.deepEqual(JSON.parse(JSON.stringify(args)), [
       {
         column: 1,
         fatal: false,
@@ -289,43 +298,46 @@ test('fromHtml', () => {
         file: 'example.html',
         note: 'Expected a `<!doctype html>` before anything else'
       }
-    ],
-    'should support vfiles'
-  )
+    ])
+  })
 })
 
 // Related to https://github.com/inikulin/parse5/issues/255
 // and https://github.com/inikulin/parse5/pull/257.
-test('parse errors: coverage', async () => {
-  await fs.writeFile(
-    new URL('error-codes-from-p5.js', import.meta.url),
-    '// @ts-nocheck\n/** @type {Record<string, string>} */\n' +
-      String(
-        await fs.readFile(
-          new URL(
-            '../node_modules/parse5/dist/common/error-codes.js',
-            import.meta.url
+test('parse errors: coverage', async function (t) {
+  await t.test(
+    'should cover all codes from `parse5` in `hast-util-from-html`',
+    async function () {
+      await fs.writeFile(
+        new URL('error-codes-from-p5.js', import.meta.url),
+        '// @ts-nocheck\n/** @type {Record<string, string>} */\n' +
+          String(
+            await fs.readFile(
+              new URL(
+                '../node_modules/parse5/dist/common/error-codes.js',
+                import.meta.url
+              )
+            )
           )
-        )
       )
-  )
 
-  /** @type {{ERR: Record<string, string>}} */
-  // @ts-ignore: this errors when tests did not run before build.
-  const {ERR: p5errors} = await import('./error-codes-from-p5.js')
+      /** @type {{ERR: Record<string, string>}} */
+      // @ts-ignore: this errors when tests did not run before build.
+      const {ERR: p5errors} = await import('./error-codes-from-p5.js')
 
-  assert.deepEqual(
-    Object.keys(p5errors).sort(),
-    Object.keys(rerrors).sort(),
-    'all codes from `parse5` should be covered by `hast-util-from-html`'
+      assert.deepEqual(
+        Object.keys(p5errors).sort(),
+        Object.keys(rerrors).sort()
+      )
+    }
   )
 })
 
-test('parse-errors: working', async (t) => {
+test('parse-errors: working', async function (t) {
   const root = new URL('parse-error/', import.meta.url)
 
-  await t.test('surrogate-in-input-stream', () => {
-    const file = toVFile({
+  await t.test('surrogate-in-input-stream', async function () {
+    const file = new VFile({
       path: 'index.html',
       value: '<!doctype html>\n' + String.fromCharCode(0xd8_00)
     })
@@ -339,29 +351,25 @@ test('parse-errors: working', async (t) => {
       }
     })
 
-    assert.deepEqual(
-      JSON.parse(JSON.stringify(actual)),
-      [
-        {
-          column: 1,
-          fatal: false,
-          message: 'Unexpected surrogate character',
-          line: 2,
-          name: 'index.html:2:1-2:1',
-          place: {
-            start: {line: 2, column: 1, offset: 16},
-            end: {line: 2, column: 1, offset: 16}
-          },
-          reason: 'Unexpected surrogate character',
-          ruleId: 'surrogate-in-input-stream',
-          source: 'parse-error',
-          file: 'index.html',
-          note: 'Unexpected code point `0xD800`. Do not use lone surrogate characters in HTML',
-          url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-surrogate-in-input-stream'
-        }
-      ],
-      'should emit messages'
-    )
+    assert.deepEqual(JSON.parse(JSON.stringify(actual)), [
+      {
+        column: 1,
+        fatal: false,
+        message: 'Unexpected surrogate character',
+        line: 2,
+        name: 'index.html:2:1-2:1',
+        place: {
+          start: {line: 2, column: 1, offset: 16},
+          end: {line: 2, column: 1, offset: 16}
+        },
+        reason: 'Unexpected surrogate character',
+        ruleId: 'surrogate-in-input-stream',
+        source: 'parse-error',
+        file: 'index.html',
+        note: 'Unexpected code point `0xD800`. Do not use lone surrogate characters in HTML',
+        url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-surrogate-in-input-stream'
+      }
+    ])
   })
 
   /* Check the next fixture. */
@@ -375,7 +383,7 @@ test('parse-errors: working', async (t) => {
       continue
     }
 
-    await t.test(fixture, async () => {
+    await t.test(fixture, async function () {
       const htmlUrl = new URL(fixture + '/index.html', root)
       const messageUrl = new URL(fixture + '/messages.json', root)
       const file = await read(htmlUrl, 'utf8')
@@ -407,11 +415,7 @@ test('parse-errors: working', async (t) => {
         )
       }
 
-      assert.deepEqual(
-        JSON.parse(JSON.stringify(actual)),
-        expected,
-        'should emit messages for `' + fixture + '`'
-      )
+      assert.deepEqual(JSON.parse(JSON.stringify(actual)), expected)
     })
   }
 })

@@ -21,28 +21,32 @@ const whatwg =
   'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-'
 const base = 'https://github.com/' + repo + '/blob/main'
 
-/** @type {Partial<Record<keyof errors, boolean>>} */
+/** @type {Partial<Record<keyof typeof errors, true>>} */
 const ignoreFixture = {
   surrogateInInputStream: true
 }
 
-/** @type {import('unified').Plugin<[], Root>} */
+/** @satisfies {import('unified').Plugin<[], Root>} */
 export default function remarkParseErrors() {
   /**
    * @param {Root} tree
+   *   Tree to transform.
+   * @returns {undefined}
+   *   Nothing.
    */
-  // @ts-expect-error: remove when `unified` is updated.
   return function (tree) {
-    zone(tree, 'parse-error', (start, _, end) => {
+    zone(tree, 'parse-error', function (start, _, end) {
       /** @type {Array<ListItem>} */
       const list = []
-      /** @type {keyof errors} */
+      /** @type {keyof typeof errors} */
       let key
 
       for (key in errors) {
         if (own.call(errors, key)) {
           const info = errors[key]
-          const kebab = key.replace(/[A-Z]/g, ($0) => '-' + $0.toLowerCase())
+          const kebab = key.replace(/[A-Z]/g, function ($0) {
+            return '-' + $0.toLowerCase()
+          })
           const reason =
             info.reason.charAt(0).toLowerCase() + info.reason.slice(1)
           const descriptionRoot = fromMarkdown(reason)
