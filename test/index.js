@@ -4,6 +4,7 @@
 
 import assert from 'node:assert/strict'
 import fs from 'node:fs/promises'
+import process from 'node:process'
 import test from 'node:test'
 import {VFile} from 'vfile'
 import {toVFile, read} from 'to-vfile'
@@ -92,20 +93,19 @@ test('fromHtml', () => {
     JSON.parse(JSON.stringify(args)),
     [
       {
-        name: '1:1-1:1',
-        message: 'Missing doctype before other content',
-        reason: 'Missing doctype before other content',
-        line: 1,
         column: 1,
-        source: 'parse-error',
-        ruleId: 'missing-doctype',
-        position: {
+        fatal: false,
+        message: 'Missing doctype before other content',
+        line: 1,
+        name: '1:1-1:1',
+        place: {
           start: {line: 1, column: 1, offset: 0},
           end: {line: 1, column: 1, offset: 0}
         },
-        fatal: false,
-        note: 'Expected a `<!doctype html>` before anything else',
-        url: null
+        reason: 'Missing doctype before other content',
+        ruleId: 'missing-doctype',
+        source: 'parse-error',
+        note: 'Expected a `<!doctype html>` before anything else'
       }
     ],
     'should support `options.onerror`'
@@ -151,18 +151,18 @@ test('fromHtml', () => {
     JSON.parse(JSON.stringify(args)),
     [
       {
-        name: '1:3-1:3',
-        message: 'Unexpected unknown named character reference',
-        reason: 'Unexpected unknown named character reference',
-        line: 1,
         column: 3,
-        source: 'parse-error',
-        ruleId: 'unknown-named-character-reference',
-        position: {
+        fatal: false,
+        message: 'Unexpected unknown named character reference',
+        line: 1,
+        name: '1:3-1:3',
+        place: {
           start: {line: 1, column: 3, offset: 2},
           end: {line: 1, column: 3, offset: 2}
         },
-        fatal: false,
+        reason: 'Unexpected unknown named character reference',
+        ruleId: 'unknown-named-character-reference',
+        source: 'parse-error',
         note: 'Unexpected character reference. Expected known named character references',
         url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unknown-named-character-reference'
       }
@@ -182,18 +182,18 @@ test('fromHtml', () => {
     JSON.parse(JSON.stringify(args)),
     [
       {
-        name: '1:5-1:5',
-        message: 'Unexpected slash at end of closing tag',
-        reason: 'Unexpected slash at end of closing tag',
-        line: 1,
         column: 5,
-        source: 'parse-error',
-        ruleId: 'end-tag-with-trailing-solidus',
-        position: {
+        fatal: false,
+        message: 'Unexpected slash at end of closing tag',
+        line: 1,
+        name: '1:5-1:5',
+        place: {
           start: {line: 1, column: 5, offset: 4},
           end: {line: 1, column: 5, offset: 4}
         },
-        fatal: false,
+        reason: 'Unexpected slash at end of closing tag',
+        ruleId: 'end-tag-with-trailing-solidus',
+        source: 'parse-error',
         note: 'Unexpected `/`. Expected `>` instead',
         url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-end-tag-with-trailing-solidus'
       }
@@ -213,18 +213,18 @@ test('fromHtml', () => {
     JSON.parse(JSON.stringify(args)),
     [
       {
-        name: '1:2-1:2',
-        message: 'Invalid first character in tag name',
-        reason: 'Invalid first character in tag name',
-        line: 1,
         column: 2,
-        source: 'parse-error',
-        ruleId: 'invalid-first-character-of-tag-name',
-        position: {
+        fatal: false,
+        message: 'Invalid first character in tag name',
+        line: 1,
+        name: '1:2-1:2',
+        place: {
           start: {line: 1, column: 2, offset: 1},
           end: {line: 1, column: 2, offset: 1}
         },
-        fatal: false,
+        reason: 'Invalid first character in tag name',
+        ruleId: 'invalid-first-character-of-tag-name',
+        source: 'parse-error',
         note: 'Unexpected `` ` ``. Expected an ASCII letter instead',
         url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-invalid-first-character-of-tag-name'
       }
@@ -244,18 +244,18 @@ test('fromHtml', () => {
     JSON.parse(JSON.stringify(args)),
     [
       {
-        name: '1:1-1:1',
-        message: 'Unexpected NULL character',
-        reason: 'Unexpected NULL character',
-        line: 1,
         column: 1,
-        source: 'parse-error',
-        ruleId: 'unexpected-null-character',
-        position: {
+        fatal: false,
+        message: 'Unexpected NULL character',
+        line: 1,
+        name: '1:1-1:1',
+        place: {
           start: {line: 1, column: 1, offset: 0},
           end: {line: 1, column: 1, offset: 0}
         },
-        fatal: false,
+        reason: 'Unexpected NULL character',
+        ruleId: 'unexpected-null-character',
+        source: 'parse-error',
         note: 'Unexpected code point `0x0`. Do not use NULL characters in HTML',
         url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-null-character'
       }
@@ -274,21 +274,20 @@ test('fromHtml', () => {
     JSON.parse(JSON.stringify(args)),
     [
       {
-        name: 'example.html:1:1-1:1',
-        message: 'Missing doctype before other content',
-        reason: 'Missing doctype before other content',
-        line: 1,
         column: 1,
-        source: 'parse-error',
-        ruleId: 'missing-doctype',
-        position: {
+        fatal: false,
+        message: 'Missing doctype before other content',
+        line: 1,
+        name: 'example.html:1:1-1:1',
+        place: {
           start: {line: 1, column: 1, offset: 0},
           end: {line: 1, column: 1, offset: 0}
         },
+        reason: 'Missing doctype before other content',
+        ruleId: 'missing-doctype',
+        source: 'parse-error',
         file: 'example.html',
-        fatal: false,
-        note: 'Expected a `<!doctype html>` before anything else',
-        url: null
+        note: 'Expected a `<!doctype html>` before anything else'
       }
     ],
     'should support vfiles'
@@ -344,19 +343,19 @@ test('parse-errors: working', async (t) => {
       JSON.parse(JSON.stringify(actual)),
       [
         {
-          message: 'Unexpected surrogate character',
-          name: 'index.html:2:1-2:1',
-          reason: 'Unexpected surrogate character',
-          line: 2,
           column: 1,
-          position: {
+          fatal: false,
+          message: 'Unexpected surrogate character',
+          line: 2,
+          name: 'index.html:2:1-2:1',
+          place: {
             start: {line: 2, column: 1, offset: 16},
             end: {line: 2, column: 1, offset: 16}
           },
-          source: 'parse-error',
+          reason: 'Unexpected surrogate character',
           ruleId: 'surrogate-in-input-stream',
+          source: 'parse-error',
           file: 'index.html',
-          fatal: false,
           note: 'Unexpected code point `0xD800`. Do not use lone surrogate characters in HTML',
           url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-surrogate-in-input-stream'
         }
@@ -377,11 +376,11 @@ test('parse-errors: working', async (t) => {
     }
 
     await t.test(fixture, async () => {
-      const file = await read(new URL(fixture + '/index.html', root), 'utf8')
+      const htmlUrl = new URL(fixture + '/index.html', root)
+      const messageUrl = new URL(fixture + '/messages.json', root)
+      const file = await read(htmlUrl, 'utf8')
       /** @type {Array<Error>} */
-      const messages = JSON.parse(
-        String(await fs.readFile(new URL(fixture + '/messages.json', root)))
-      )
+      let expected
 
       file.dirname = ''
       /** @type {Array<VFileMessage>} */
@@ -393,9 +392,24 @@ test('parse-errors: working', async (t) => {
         }
       })
 
+      try {
+        if ('UPDATE' in process.env) {
+          throw new Error('Update')
+        }
+
+        expected = JSON.parse(String(await fs.readFile(messageUrl)))
+      } catch {
+        expected = actual
+
+        await fs.writeFile(
+          messageUrl,
+          JSON.stringify(expected, undefined, 2) + '\n'
+        )
+      }
+
       assert.deepEqual(
         JSON.parse(JSON.stringify(actual)),
-        messages,
+        expected,
         'should emit messages for `' + fixture + '`'
       )
     })

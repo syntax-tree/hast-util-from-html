@@ -26,9 +26,13 @@ const ignoreFixture = {
   surrogateInInputStream: true
 }
 
-/** @type {import('unified').Plugin<Array<void>, Root>} */
+/** @type {import('unified').Plugin<[], Root>} */
 export default function remarkParseErrors() {
-  return (tree) => {
+  /**
+   * @param {Root} tree
+   */
+  // @ts-expect-error: remove when `unified` is updated.
+  return function (tree) {
     zone(tree, 'parse-error', (start, _, end) => {
       /** @type {Array<ListItem>} */
       const list = []

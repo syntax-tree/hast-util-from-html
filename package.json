@@ -33,29 +33,31 @@
     "index.js"
   ],
   "dependencies": {
-    "@types/hast": "^2.0.0",
-    "hast-util-from-parse5": "^7.0.0",
+    "@types/hast": "^3.0.0",
+    "hast-util-from-parse5": "^8.0.0",
     "parse5": "^7.0.0",
-    "vfile": "^5.0.0",
-    "vfile-message": "^3.0.0"
+    "vfile": "^6.0.0",
+    "vfile-message": "^4.0.0"
   },
   "devDependencies": {
+    "@types/mdast": "^4.0.0",
     "@types/node": "^20.0.0",
     "c8": "^8.0.0",
-    "mdast-zone": "^5.0.0",
-    "prettier": "^2.0.0",
+    "mdast-zone": "^6.0.0",
+    "prettier": "^3.0.0",
     "remark-cli": "^11.0.0",
     "remark-preset-wooorm": "^9.0.0",
+    "to-vfile": "^8.0.0",
     "type-coverage": "^2.0.0",
     "type-fest": "^4.0.0",
     "typescript": "^5.0.0",
-    "unist-builder": "^3.0.0",
+    "unist-builder": "^4.0.0",
     "xo": "^0.55.0"
   },
   "scripts": {
     "prepack": "npm run build && npm run format",
     "build": "tsc --build --clean && tsc --build && type-coverage",
-    "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
+    "format": "remark . -qfo && prettier . -w --log-level warn && xo --fix",
     "test-api": "node --conditions development test/index.js",
     "test-coverage": "c8 --check-coverage --100 --reporter lcov npm run test-api",
     "test": "npm run build && npm run format && npm run test-coverage"
