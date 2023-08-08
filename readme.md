@@ -57,7 +57,7 @@ about positional info, parse errors, and consistency across browsers, use
 [`hast-util-from-html-isomorphic`][hast-util-from-html-isomorphic], which
 wraps this in Node and uses browser APIs otherwise.
 
-Finally you can use the utility [`hast-util-to-html`][hast-util-to-html] to do
+Finally you can use the utility [`hast-util-to-html`][hast-util-to-html] for
 the inverse of this utility.
 It turns hast into HTML.
 
@@ -126,8 +126,6 @@ There is no default export.
 Turn serialized HTML into a hast tree.
 
 ###### Parameters
-
-<!-- To do: update link when `vfile` has new docs. -->
 
 *   `value` ([`Compatible`][compatible])
     — serialized HTML to parse
@@ -456,7 +454,7 @@ fromHtml(doc, {
 > too.
 > Errors in unified mean the same as an exception in your JavaScript code: a
 > crash.
-> That’s why we use warnings instead, because we can continue to do work.
+> That’s why we use warnings instead, because we can continue doing work.
 
 ## Syntax
 
@@ -583,7 +581,7 @@ abide by its terms.
 
 [hast-util-from-html-isomorphic]: https://github.com/syntax-tree/hast-util-from-html-isomorphic
 
-[compatible]: https://github.com/vfile/vfile/blob/03efac7/lib/index.js#L16
+[compatible]: https://github.com/vfile/vfile#compatible
 
 [api-from-html]: #fromhtmlvalue-options
 
