@@ -73,14 +73,14 @@ npm install hast-util-from-html
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {fromHtml} from 'https://esm.sh/hast-util-from-html@1'
+import {fromHtml} from 'https://esm.sh/hast-util-from-html@2'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {fromHtml} from 'https://esm.sh/hast-util-from-html@1?bundle'
+  import {fromHtml} from 'https://esm.sh/hast-util-from-html@2?bundle'
 </script>
 ```
 
