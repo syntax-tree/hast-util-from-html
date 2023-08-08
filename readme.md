@@ -18,10 +18,10 @@
 *   [Use](#use)
 *   [API](#api)
     *   [`fromHtml(value[, options])`](#fromhtmlvalue-options)
-    *   [`Options`](#options)
-    *   [`OnError`](#onerror)
     *   [`ErrorCode`](#errorcode)
     *   [`ErrorSeverity`](#errorseverity)
+    *   [`OnError`](#onerror)
+    *   [`Options`](#options)
 *   [Examples](#examples)
     *   [Example: fragment versus document](#example-fragment-versus-document)
     *   [Example: whitespace around and inside `<html>`](#example-whitespace-around-and-inside-html)
@@ -42,15 +42,20 @@ tree.
 ## When should I use this?
 
 If you want to handle syntax trees manually, use this.
+
 Use [`parse5`][parse5] instead when you just want to parse HTML and don’t care
 about [hast][].
-
 You can also use [`hast-util-from-parse5`][hast-util-from-parse5] and
-[`parse5`][parse5] yourself manually, or use the rehype plugin
+[`parse5`][parse5] yourself, or use the rehype plugin
 [`rehype-parse`][rehype-parse], which wraps this utility to also parse HTML at
 a higher-level (easier) abstraction.
 [`xast-util-from-xml`][xast-util-from-xml] can be used if you are dealing with
 XML instead of HTML.
+
+If you might run in a browser and prefer a ligher alternative, while not caring
+about positional info, parse errors, and consistency across browsers, use
+[`hast-util-from-html-isomorphic`][hast-util-from-html-isomorphic], which
+wraps this in Node and uses browser APIs otherwise.
 
 Finally you can use the utility [`hast-util-to-html`][hast-util-to-html] to do
 the inverse of this utility.
@@ -59,7 +64,7 @@ It turns hast into HTML.
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 14.14+ and 16.0+), install with [npm][]:
+In Node.js (version 16+), install with [npm][]:
 
 ```sh
 npm install hast-util-from-html
@@ -68,14 +73,14 @@ npm install hast-util-from-html
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {fromHtml} from "https://esm.sh/hast-util-from-html@1"
+import {fromHtml} from 'https://esm.sh/hast-util-from-html@1'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {fromHtml} from "https://esm.sh/hast-util-from-html@1?bundle"
+  import {fromHtml} from 'https://esm.sh/hast-util-from-html@1?bundle'
 </script>
 ```
 
@@ -113,7 +118,7 @@ Yields:
 
 ## API
 
-This package exports the identifier [`fromHtml`][fromhtml].
+This package exports the identifier [`fromHtml`][api-from-html].
 There is no default export.
 
 ### `fromHtml(value[, options])`
@@ -126,12 +131,57 @@ Turn serialized HTML into a hast tree.
 
 *   `value` ([`Compatible`][compatible])
     — serialized HTML to parse
-*   `options` ([`Options`][options], optional)
+*   `options` ([`Options`][api-options], optional)
     — configuration
 
 ###### Returns
 
 Tree ([`Root`][root]).
+
+### `ErrorCode`
+
+Known names of parse errors (TypeScript type).
+
+###### Types
+
+```ts
+type ErrorCode =
+  | 'abandonedHeadElementChild'
+  | 'abruptClosingOfEmptyComment'
+  | 'abruptDoctypePublicIdentifier'
+  // … see readme on `options[key in ErrorCode]` above.
+```
+
+### `ErrorSeverity`
+
+Error severity (TypeScript type).
+
+###### Types
+
+```ts
+export type ErrorSeverity =
+  // Turn the parse error off:
+  | 0
+  | false
+  // Turn the parse error into a warning:
+  | 1
+  | true
+  // Turn the parse error into an actual error: processing stops.
+  | 2
+```
+
+### `OnError`
+
+Function called when encountering [HTML parse errors][parse-errors].
+
+###### Parameters
+
+*   `error` ([`VFileMessage`][vfile-message])
+    — message
+
+###### Returns
+
+Nothing (`void`).
 
 ### `Options`
 
@@ -141,7 +191,7 @@ Configuration (TypeScript type).
 
 ###### `options.space`
 
-Which space the document is in (`'svg'` or `'html'`, default: `'html'`).
+Which space the document is in (`'html'` or `'svg'`, default: `'html'`).
 
 When an `<svg>` element is found in the HTML space, `hast-util-from-html`
 already automatically switches to and from the SVG space when entering and
@@ -169,13 +219,13 @@ In document mode, unopened `html`, `head`, and `body` elements are opened.
 ###### `options.onerror`
 
 Function called when encountering [HTML parse errors][parse-errors]
-([`OnError`][onerror], optional).
+([`OnError`][api-on-error], optional).
 
 ###### `options[key in ErrorCode]`
 
 Specific parse errors can be configured by setting their identifiers (see
-[`ErrorCode`][errorcode]) as keys directly in `options` to an
-[`ErrorSeverity`][errorseverity] as value.
+[`ErrorCode`][api-error-code]) as keys directly in `options` to an
+[`ErrorSeverity`][api-error-severity] as value.
 
 The list of parse errors:
 
@@ -243,51 +293,6 @@ The list of parse errors:
 *   [`unknownNamedCharacterReference`](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unknown-named-character-reference) — unexpected unknown named character reference ([example](https://github.com/syntax-tree/hast-util-from-html/blob/main/test/parse-error/unknown-named-character-reference/index.html))
 
 <!-- parse-error end -->
-
-### `OnError`
-
-Function called when encountering [HTML parse errors][parse-errors].
-
-###### Parameters
-
-*   `error` ([`VFileMessage`][vfilemessage])
-    — message
-
-###### Returns
-
-Nothing (`void`).
-
-### `ErrorCode`
-
-Known names of parse errors (TypeScript type).
-
-###### Types
-
-```ts
-type ErrorCode =
-  | 'abandonedHeadElementChild'
-  | 'abruptClosingOfEmptyComment'
-  | 'abruptDoctypePublicIdentifier'
-  // … see readme on `options[key in ErrorCode]` above.
-```
-
-### `ErrorSeverity`
-
-Error severity (TypeScript type).
-
-###### Types
-
-```ts
-export type ErrorSeverity =
-  // Turn the parse error off:
-  | 0
-  | false
-  // Turn the parse error into a warning:
-  | 1
-  | true
-  // Turn the parse error into an actual error: processing stops.
-  | 2
-```
 
 ## Examples
 
@@ -368,7 +373,7 @@ root[2] (1:1-9:8, 0-119)
     │   │   └─0 text "Hi!" (4:12-4:15, 51-54)
     │   └─2 text "\n  " (4:23-5:3, 62-65)
     ├─1 text "\n  " (5:10-6:3, 72-75)
-    └─2 element<body>[3] (6:3-9:8, 75-119)
+    └─2 element<body>[3] (6:3-8:10, 75-111)
         │ properties: {}
         ├─0 text "\n    " (6:9-7:5, 81-86)
         ├─1 element<h1>[1] (7:5-7:20, 86-101)
@@ -410,24 +415,34 @@ fromHtml(doc, {
 
 ```txt
 [1:10-1:10: Missing whitespace before doctype name] {
-  reason: 'Missing whitespace before doctype name',
-  line: 1,
+  ancestors: undefined,
+  cause: undefined,
   column: 10,
-  source: 'parse-error',
-  ruleId: 'missing-whitespace-before-doctype-name',
-  position: [Object],
   fatal: true,
+  line: 1,
+  place: {
+    start: { line: 1, column: 10, offset: 9 },
+    end: { line: 1, column: 10, offset: 9 }
+  },
+  reason: 'Missing whitespace before doctype name',
+  ruleId: 'missing-whitespace-before-doctype-name',
+  source: 'parse-error',
   note: 'Unexpected `h`. Expected ASCII whitespace instead',
   url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-missing-whitespace-before-doctype-name'
 }
 [2:23-2:23: Unexpected duplicate attribute] {
-  reason: 'Unexpected duplicate attribute',
-  line: 2,
+  ancestors: undefined,
+  cause: undefined,
   column: 23,
-  source: 'parse-error',
-  ruleId: 'duplicate-attribute',
-  position: [Object],
   fatal: false,
+  line: 2,
+  place: {
+    start: { line: 2, column: 23, offset: 37 },
+    end: { line: 2, column: 23, offset: 37 }
+  },
+  reason: 'Unexpected duplicate attribute',
+  ruleId: 'duplicate-attribute',
+  source: 'parse-error',
   note: 'Unexpectedly double attribute. Expected attributes to occur only once',
   url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-duplicate-attribute'
 }
@@ -451,15 +466,19 @@ followed by browsers such as Chrome and Firefox.
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional type [`Options`][options], [`OnError`][onerror],
-[`ErrorCode`][errorcode], and [`ErrorSeverity`][errorseverity].
+It exports the additional types
+[`ErrorCode`][api-error-code], [`ErrorSeverity`][api-error-severity],
+[`OnError`][api-on-error], and [`Options`][api-options].
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 14.14+ and 16.0+.
-Our projects sometimes work with older versions, but this is not guaranteed.
+
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line, `hast-util-from-html@^1`,
+compatible with Node.js 12.
 
 ## Security
 
@@ -504,9 +523,9 @@ abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/hast-util-from-html
 
-[size-badge]: https://img.shields.io/bundlephobia/minzip/hast-util-from-html.svg
+[size-badge]: https://img.shields.io/badge/dynamic/json?label=minzipped%20size&query=$.size.compressedSize&url=https://deno.bundlejs.com/?q=hast-util-from-html
 
-[size]: https://bundlephobia.com/result?p=hast-util-from-html
+[size]: https://bundlejs.com/?q=hast-util-from-html
 
 [sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
 
@@ -560,16 +579,18 @@ abide by its terms.
 
 [parse-errors]: https://html.spec.whatwg.org/multipage/parsing.html#parse-errors
 
-[vfilemessage]: https://github.com/vfile/vfile-message#vfilemessagereason-place-origin
+[vfile-message]: https://github.com/vfile/vfile-message#vfilemessagereason-place-origin
 
-[fromhtml]: #fromhtmlvalue-options
-
-[options]: #options
-
-[onerror]: #onerror
-
-[errorcode]: #errorcode
-
-[errorseverity]: #errorseverity
+[hast-util-from-html-isomorphic]: https://github.com/syntax-tree/hast-util-from-html-isomorphic
 
 [compatible]: https://github.com/vfile/vfile/blob/03efac7/lib/index.js#L16
+
+[api-from-html]: #fromhtmlvalue-options
+
+[api-error-code]: #errorcode
+
+[api-error-severity]: #errorseverity
+
+[api-on-error]: #onerror
+
+[api-options]: #options
