@@ -19,7 +19,7 @@
     },
     "reason": "Invalid character after system identifier in doctype",
     "ruleId": "unexpected-character-after-doctype-system-identifier",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected character at `b`. Expected `>`",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-character-after-doctype-system-identifier"

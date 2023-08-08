@@ -19,7 +19,7 @@
     },
     "reason": "Missing doctype before other content",
     "ruleId": "missing-doctype",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Expected a `<!doctype html>` before anything else"
   }

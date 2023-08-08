@@ -19,7 +19,7 @@
     },
     "reason": "Missing quote before public identifier in doctype",
     "ruleId": "missing-quote-before-doctype-public-identifier",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `b`. Expected `\"` or `'` instead",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-missing-quote-before-doctype-public-identifier"

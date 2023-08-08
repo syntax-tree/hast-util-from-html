@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected character in unquoted attribute value",
     "ruleId": "unexpected-character-in-unquoted-attribute-value",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `` ` ``. Quote the attribute value to include it",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-character-in-unquoted-attribute-value"

@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected CDATA section in HTML",
     "ruleId": "cdata-in-html-content",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `<![CDATA[` in HTML. Remove it, use a comment, or encode special characters instead",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-cdata-in-html-content"

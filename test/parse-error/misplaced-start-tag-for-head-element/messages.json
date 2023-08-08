@@ -19,7 +19,7 @@
     },
     "reason": "Misplaced `<head>` start tag",
     "ruleId": "misplaced-start-tag-for-head-element",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected start tag `<head>`. Expected `<head>` directly after doctype"
   }

@@ -19,7 +19,7 @@
     },
     "reason": "Missing name in end tag",
     "ruleId": "missing-end-tag-name",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `>`. Expected an ASCII letter instead",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-missing-end-tag-name"

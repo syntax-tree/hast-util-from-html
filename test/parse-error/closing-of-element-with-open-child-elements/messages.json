@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected closing tag with open child elements",
     "ruleId": "closing-of-element-with-open-child-elements",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpectedly closing tag. Expected other tags to be closed first"
   }

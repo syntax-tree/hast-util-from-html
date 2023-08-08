@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected character in attribute name",
     "ruleId": "unexpected-character-in-attribute-name",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `<`. Expected whitespace, `/`, `>`, `=`, or probably an ASCII letter",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-character-in-attribute-name"
@@ -44,7 +44,7 @@
     },
     "reason": "Unexpected character in attribute name",
     "ruleId": "unexpected-character-in-attribute-name",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `'`. Expected whitespace, `/`, `>`, `=`, or probably an ASCII letter",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-character-in-attribute-name"
@@ -69,7 +69,7 @@
     },
     "reason": "Unexpected character in attribute name",
     "ruleId": "unexpected-character-in-attribute-name",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `'`. Expected whitespace, `/`, `>`, `=`, or probably an ASCII letter",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-character-in-attribute-name"

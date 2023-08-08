@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected end of file",
     "ruleId": "open-elements-left-after-eof",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected end of file. Expected closing tag instead"
   }

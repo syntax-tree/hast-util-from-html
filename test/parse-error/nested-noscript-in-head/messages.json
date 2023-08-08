@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected nested `<noscript>` in `<head>`",
     "ruleId": "nested-noscript-in-head",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `<noscript>`. Expected a closing tag or a meta element"
   },
@@ -43,7 +43,7 @@
     },
     "reason": "Unexpected unopened end tag",
     "ruleId": "end-tag-without-matching-open-element",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected end tag. Expected no end tag or another end tag"
   }

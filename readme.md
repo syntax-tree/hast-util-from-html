@@ -424,7 +424,7 @@ fromHtml(doc, {
   },
   reason: 'Missing whitespace before doctype name',
   ruleId: 'missing-whitespace-before-doctype-name',
-  source: 'parse-error',
+  source: 'hast-util-from-html',
   note: 'Unexpected `h`. Expected ASCII whitespace instead',
   url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-missing-whitespace-before-doctype-name'
 }
@@ -440,7 +440,7 @@ fromHtml(doc, {
   },
   reason: 'Unexpected duplicate attribute',
   ruleId: 'duplicate-attribute',
-  source: 'parse-error',
+  source: 'hast-util-from-html',
   note: 'Unexpectedly double attribute. Expected attributes to occur only once',
   url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-duplicate-attribute'
 }

@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected trailing slash on start tag of non-void element",
     "ruleId": "non-void-html-element-start-tag-with-trailing-solidus",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `/`. Expected `>` instead",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-non-void-html-element-start-tag-with-trailing-solidus"

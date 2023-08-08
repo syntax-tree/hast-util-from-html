@@ -19,7 +19,7 @@
     },
     "reason": "Incorrectly closed comment",
     "ruleId": "incorrectly-closed-comment",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `!`. Expected `-->` to close the comment",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-incorrectly-closed-comment"

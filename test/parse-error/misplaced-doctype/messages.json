@@ -19,7 +19,7 @@
     },
     "reason": "Misplaced doctype",
     "ruleId": "misplaced-doctype",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected doctype. Expected doctype before head"
   }

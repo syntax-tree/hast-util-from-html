@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected too big numeric character reference",
     "ruleId": "character-reference-outside-unicode-range",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpectedly high character reference. Expected character references to be at most hexadecimal 10ffff (or decimal 1114111)",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-character-reference-outside-unicode-range"
@@ -44,7 +44,7 @@
     },
     "reason": "Unexpected too big numeric character reference",
     "ruleId": "character-reference-outside-unicode-range",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpectedly high character reference. Expected character references to be at most hexadecimal 10ffff (or decimal 1114111)",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-character-reference-outside-unicode-range"

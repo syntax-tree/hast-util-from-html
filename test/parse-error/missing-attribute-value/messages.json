@@ -19,7 +19,7 @@
     },
     "reason": "Missing attribute value",
     "ruleId": "missing-attribute-value",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `=`. Expected an attribute value or no `=` instead",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-missing-attribute-value"

@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected control character",
     "ruleId": "control-character-in-input-stream",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected control character `0x7F`. Expected a non-control code point, 0x00, or ASCII whitespace",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-control-character-in-input-stream"

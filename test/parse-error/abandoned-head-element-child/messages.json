@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected metadata element after head",
     "ruleId": "abandoned-head-element-child",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected element after head. Expected the element before `</head>`"
   }

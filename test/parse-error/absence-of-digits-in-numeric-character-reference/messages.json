@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected non-digit at start of numeric character reference",
     "ruleId": "absence-of-digits-in-numeric-character-reference",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `a`. Expected `[0-9]` for decimal references or `[0-9a-fA-F]` for hexadecimal references",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-absence-of-digits-in-numeric-character-reference"
@@ -44,7 +44,7 @@
     },
     "reason": "Unexpected non-digit at start of numeric character reference",
     "ruleId": "absence-of-digits-in-numeric-character-reference",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `g`. Expected `[0-9]` for decimal references or `[0-9a-fA-F]` for hexadecimal references",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-absence-of-digits-in-numeric-character-reference"

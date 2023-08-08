@@ -19,7 +19,7 @@
     },
     "reason": "Invalid sequence after doctype name",
     "ruleId": "invalid-character-sequence-after-doctype-name",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected sequence at `b`. Expected `public` or `system`",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-invalid-character-sequence-after-doctype-name"

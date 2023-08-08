@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected end of file in doctype",
     "ruleId": "eof-in-doctype",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected end of file. Expected a valid doctype (such as `<!doctype html>`)",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-eof-in-doctype"
@@ -44,7 +44,7 @@
     },
     "reason": "Unexpected non-conforming doctype declaration",
     "ruleId": "non-conforming-doctype",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Expected `<!doctype html>` or `<!doctype html system \"about:legacy-compat\">`"
   }

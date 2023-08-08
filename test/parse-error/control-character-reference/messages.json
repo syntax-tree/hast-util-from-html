@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected control character reference",
     "ruleId": "control-character-reference",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpectedly control character in reference. Expected a non-control code point, 0x00, or ASCII whitespace",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-control-character-reference"

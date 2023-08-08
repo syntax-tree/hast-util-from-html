@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected nested comment",
     "ruleId": "nested-comment",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `<!--`. Expected `-->`",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-nested-comment"

@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected surrogate character referenced by character reference",
     "ruleId": "surrogate-character-reference",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected code point. Do not use lone surrogate characters in HTML",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-surrogate-character-reference"

@@ -19,7 +19,7 @@
     },
     "reason": "Disallowed content inside `<noscript>` in `<head>`",
     "ruleId": "disallowed-content-in-noscript-in-head",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected text character `h`. Only use text in `<noscript>`s in `<body>`"
   }

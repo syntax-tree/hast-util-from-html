@@ -19,7 +19,7 @@
     },
     "reason": "Missing whitespace after system identifier in doctype",
     "ruleId": "missing-whitespace-after-doctype-system-keyword",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `\"`. Expected ASCII whitespace instead",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-missing-whitespace-after-doctype-system-keyword"
@@ -44,7 +44,7 @@
     },
     "reason": "Unexpected non-conforming doctype declaration",
     "ruleId": "non-conforming-doctype",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Expected `<!doctype html>` or `<!doctype html system \"about:legacy-compat\">`"
   }

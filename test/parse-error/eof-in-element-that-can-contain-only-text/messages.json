@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected end of file in element that can only contain text",
     "ruleId": "eof-in-element-that-can-contain-only-text",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected end of file. Expected text or a closing tag"
   }

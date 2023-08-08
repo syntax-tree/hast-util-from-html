@@ -98,7 +98,7 @@ test('fromHtml', async function (t) {
         },
         reason: 'Missing doctype before other content',
         ruleId: 'missing-doctype',
-        source: 'parse-error',
+        source: 'hast-util-from-html',
         note: 'Expected a `<!doctype html>` before anything else'
       }
     ])
@@ -162,7 +162,7 @@ test('fromHtml', async function (t) {
         },
         reason: 'Unexpected unknown named character reference',
         ruleId: 'unknown-named-character-reference',
-        source: 'parse-error',
+        source: 'hast-util-from-html',
         note: 'Unexpected character reference. Expected known named character references',
         url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unknown-named-character-reference'
       }
@@ -195,7 +195,7 @@ test('fromHtml', async function (t) {
           },
           reason: 'Unexpected slash at end of closing tag',
           ruleId: 'end-tag-with-trailing-solidus',
-          source: 'parse-error',
+          source: 'hast-util-from-html',
           note: 'Unexpected `/`. Expected `>` instead',
           url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-end-tag-with-trailing-solidus'
         }
@@ -229,7 +229,7 @@ test('fromHtml', async function (t) {
           },
           reason: 'Invalid first character in tag name',
           ruleId: 'invalid-first-character-of-tag-name',
-          source: 'parse-error',
+          source: 'hast-util-from-html',
           note: 'Unexpected `` ` ``. Expected an ASCII letter instead',
           url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-invalid-first-character-of-tag-name'
         }
@@ -263,7 +263,7 @@ test('fromHtml', async function (t) {
           },
           reason: 'Unexpected NULL character',
           ruleId: 'unexpected-null-character',
-          source: 'parse-error',
+          source: 'hast-util-from-html',
           note: 'Unexpected code point `0x0`. Do not use NULL characters in HTML',
           url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-null-character'
         }
@@ -294,7 +294,7 @@ test('fromHtml', async function (t) {
         },
         reason: 'Missing doctype before other content',
         ruleId: 'missing-doctype',
-        source: 'parse-error',
+        source: 'hast-util-from-html',
         file: 'example.html',
         note: 'Expected a `<!doctype html>` before anything else'
       }
@@ -364,7 +364,7 @@ test('parse-errors: working', async function (t) {
         },
         reason: 'Unexpected surrogate character',
         ruleId: 'surrogate-in-input-stream',
-        source: 'parse-error',
+        source: 'hast-util-from-html',
         file: 'index.html',
         note: 'Unexpected code point `0xD800`. Do not use lone surrogate characters in HTML',
         url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-surrogate-in-input-stream'

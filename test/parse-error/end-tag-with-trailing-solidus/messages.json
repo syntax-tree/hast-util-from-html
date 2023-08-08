@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected slash at end of closing tag",
     "ruleId": "end-tag-with-trailing-solidus",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `/`. Expected `>` instead",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-end-tag-with-trailing-solidus"

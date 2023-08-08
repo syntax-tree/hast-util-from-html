@@ -19,7 +19,7 @@
     },
     "reason": "Missing semicolon after character reference",
     "ruleId": "missing-semicolon-after-character-reference",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `i`. Expected `;` instead",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-missing-semicolon-after-character-reference"

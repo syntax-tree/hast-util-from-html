@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected NULL character",
     "ruleId": "unexpected-null-character",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected code point `0x0`. Do not use NULL characters in HTML",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-null-character"

@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected slash in tag",
     "ruleId": "unexpected-solidus-in-tag",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `/`. Expected it followed by `>` or in a quoted attribute value",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unexpected-solidus-in-tag"

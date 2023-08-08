@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected noncharacter character",
     "ruleId": "noncharacter-in-input-stream",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected code point `0xFDD0`. Do not use noncharacters in HTML",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-noncharacter-in-input-stream"

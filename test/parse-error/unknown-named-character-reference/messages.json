@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected unknown named character reference",
     "ruleId": "unknown-named-character-reference",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected character reference. Expected known named character references",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-unknown-named-character-reference"

@@ -19,7 +19,7 @@
     },
     "reason": "Missing system identifier in doctype",
     "ruleId": "missing-doctype-system-identifier",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `>`. Expected identifier for `system` instead (suggested: `\"about:legacy-compat\"`)",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-missing-doctype-system-identifier"

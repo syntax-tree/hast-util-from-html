@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected end of file in comment inside script",
     "ruleId": "eof-in-script-html-comment-like-text",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected end of file. Expected `-->` to close the comment",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-eof-in-script-html-comment-like-text"
@@ -44,7 +44,7 @@
     },
     "reason": "Unexpected end of file in element that can only contain text",
     "ruleId": "eof-in-element-that-can-contain-only-text",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected end of file. Expected text or a closing tag"
   }

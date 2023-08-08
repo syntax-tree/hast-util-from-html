@@ -19,7 +19,7 @@
     },
     "reason": "Missing whitespace between attributes",
     "ruleId": "missing-whitespace-between-attributes",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected `c`. Expected ASCII whitespace instead",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-missing-whitespace-between-attributes"

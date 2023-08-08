@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected end of file in CDATA",
     "ruleId": "eof-in-cdata",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected end of file. Expected `]]>` to close the CDATA",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-eof-in-cdata"

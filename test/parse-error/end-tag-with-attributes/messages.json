@@ -19,7 +19,7 @@
     },
     "reason": "Unexpected attribute on closing tag",
     "ruleId": "end-tag-with-attributes",
-    "source": "parse-error",
+    "source": "hast-util-from-html",
     "file": "index.html",
     "note": "Unexpected attribute. Expected `>` instead",
     "url": "https://html.spec.whatwg.org/multipage/parsing.html#parse-error-end-tag-with-attributes"
