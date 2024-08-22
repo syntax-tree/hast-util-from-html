@@ -4,4 +4,6 @@
 coverage/
 node_modules/
 yarn.lock
-test/error-codes-from-p5.js
+/test/error-codes-from-p5.js
+!/lib/types.d.ts
+!/index.d.ts

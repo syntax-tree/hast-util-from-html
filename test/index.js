@@ -1,7 +1,7 @@
 /* eslint-disable unicorn/prefer-structured-clone -- JSON is simplified */
 
 /**
- * @typedef {import('vfile-message').VFileMessage} VFileMessage
+ * @import {VFileMessage} from 'vfile-message'
  */
 
 import assert from 'node:assert/strict'

@@ -1,7 +1,7 @@
 /**
- * @typedef {import('mdast').Root} Root
- * @typedef {import('mdast').ListItem} ListItem
- * @typedef {import('mdast').PhrasingContent} PhrasingContent
+ * @import {ListItem, PhrasingContent, Root} from 'mdast'
+ * @import {PackageJson} from 'type-fest'
+ * @import {Plugin} from 'unified'
  */
 
 import fs from 'node:fs/promises'
@@ -12,7 +12,7 @@ import {errors} from '../lib/errors.js'
 
 const own = {}.hasOwnProperty
 
-/** @type {import('type-fest').PackageJson} */
+/** @type {PackageJson} */
 const packageJson = JSON.parse(String(await fs.readFile('package.json')))
 
 const repo = packageJson.repository
@@ -26,7 +26,7 @@ const ignoreFixture = {
   surrogateInInputStream: true
 }
 
-/** @satisfies {import('unified').Plugin<[], Root>} */
+/** @satisfies {Plugin<[], Root>} */
 export default function remarkParseErrors() {
   /**
    * @param {Root} tree
