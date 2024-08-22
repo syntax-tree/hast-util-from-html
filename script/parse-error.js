@@ -13,9 +13,9 @@ import {errors} from '../lib/errors.js'
 const own = {}.hasOwnProperty
 
 /** @type {import('type-fest').PackageJson} */
-const pkg = JSON.parse(String(await fs.readFile('package.json')))
+const packageJson = JSON.parse(String(await fs.readFile('package.json')))
 
-const repo = pkg.repository
+const repo = packageJson.repository
 
 const whatwg =
   'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-'

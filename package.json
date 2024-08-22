@@ -41,18 +41,18 @@
   },
   "devDependencies": {
     "@types/mdast": "^4.0.0",
-    "@types/node": "^20.0.0",
-    "c8": "^8.0.0",
+    "@types/node": "^22.0.0",
+    "c8": "^10.0.0",
     "mdast-zone": "^6.0.0",
     "prettier": "^3.0.0",
-    "remark-cli": "^11.0.0",
-    "remark-preset-wooorm": "^9.0.0",
+    "remark-cli": "^12.0.0",
+    "remark-preset-wooorm": "^10.0.0",
     "to-vfile": "^8.0.0",
     "type-coverage": "^2.0.0",
     "type-fest": "^4.0.0",
     "typescript": "^5.0.0",
     "unist-builder": "^4.0.0",
-    "xo": "^0.55.0"
+    "xo": "^0.59.0"
   },
   "scripts": {
     "prepack": "npm run build && npm run format",

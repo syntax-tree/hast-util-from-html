@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/prefer-structured-clone -- JSON is simplified */
+
 /**
  * @typedef {import('vfile-message').VFileMessage} VFileMessage
  */
@@ -77,15 +79,15 @@ test('fromHtml', async function (t) {
 
   await t.test('should support `options.onerror`', async function () {
     /** @type {unknown} */
-    let args
+    let values
 
     fromHtml('a', {
       onerror(...parameters) {
-        args = parameters
+        values = parameters
       }
     })
 
-    assert.deepEqual(JSON.parse(JSON.stringify(args)), [
+    assert.deepEqual(JSON.parse(JSON.stringify(values)), [
       {
         column: 1,
         fatal: false,
@@ -108,16 +110,16 @@ test('fromHtml', async function (t) {
     'should support `options.*` to level warnings (w/ numbers)',
     async function () {
       /** @type {unknown} */
-      let args
+      let values
 
       fromHtml('a', {
         onerror(...parameters) {
-          args = parameters
+          values = parameters
         },
         missingDoctype: 0
       })
 
-      assert.deepEqual(JSON.stringify(args), undefined)
+      assert.deepEqual(JSON.stringify(values), undefined)
     }
   )
 
@@ -125,31 +127,31 @@ test('fromHtml', async function (t) {
     'should support `options.*` to level warnings (w/ booleans)',
     async function () {
       /** @type {unknown} */
-      let args
+      let values
 
       fromHtml('a', {
         onerror(...parameters) {
-          args = parameters
+          values = parameters
         },
         missingDoctype: false
       })
 
-      assert.deepEqual(JSON.stringify(args), undefined)
+      assert.deepEqual(JSON.stringify(values), undefined)
     }
   )
 
   await t.test('should support warnings with URLs', async function () {
     /** @type {unknown} */
-    let args
+    let values
 
     fromHtml('&x;', {
       onerror(...parameters) {
-        args = parameters
+        values = parameters
       },
       missingDoctype: false
     })
 
-    assert.deepEqual(JSON.parse(JSON.stringify(args)), [
+    assert.deepEqual(JSON.parse(JSON.stringify(values)), [
       {
         column: 3,
         fatal: false,
@@ -173,16 +175,16 @@ test('fromHtml', async function (t) {
     'should support warnings with character codes',
     async function () {
       /** @type {unknown} */
-      let args
+      let values
 
       fromHtml('</x/>', {
         onerror(...parameters) {
-          args = parameters
+          values = parameters
         },
         missingDoctype: false
       })
 
-      assert.deepEqual(JSON.parse(JSON.stringify(args)), [
+      assert.deepEqual(JSON.parse(JSON.stringify(values)), [
         {
           column: 5,
           fatal: false,
@@ -207,16 +209,16 @@ test('fromHtml', async function (t) {
     'should support warnings with character codes (`` ` ``)',
     async function () {
       /** @type {unknown} */
-      let args
+      let values
 
       fromHtml('<`>', {
         onerror(...parameters) {
-          args = parameters
+          values = parameters
         },
         missingDoctype: false
       })
 
-      assert.deepEqual(JSON.parse(JSON.stringify(args)), [
+      assert.deepEqual(JSON.parse(JSON.stringify(values)), [
         {
           column: 2,
           fatal: false,
@@ -241,16 +243,16 @@ test('fromHtml', async function (t) {
     'should support warnings with decimal character codes',
     async function () {
       /** @type {unknown} */
-      let args
+      let values
 
       fromHtml('\0', {
         onerror(...parameters) {
-          args = parameters
+          values = parameters
         },
         missingDoctype: false
       })
 
-      assert.deepEqual(JSON.parse(JSON.stringify(args)), [
+      assert.deepEqual(JSON.parse(JSON.stringify(values)), [
         {
           column: 1,
           fatal: false,
@@ -273,15 +275,15 @@ test('fromHtml', async function (t) {
 
   await t.test('should support vfiles', async function () {
     /** @type {unknown} */
-    let args
+    let values
 
     fromHtml(new VFile({value: '</x/>', path: 'example.html'}), {
       onerror(...parameters) {
-        args = parameters
+        values = parameters
       }
     })
 
-    assert.deepEqual(JSON.parse(JSON.stringify(args)), [
+    assert.deepEqual(JSON.parse(JSON.stringify(values)), [
       {
         column: 1,
         fatal: false,
