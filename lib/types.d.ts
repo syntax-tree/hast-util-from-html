@@ -27,12 +27,14 @@ export type OnError = (error: VFileMessage) => undefined | void
 /**
  * Options that define the severity of errors.
  */
-export type ErrorOptions = Partial<Record<ErrorCode, ErrorSeverity | undefined>>
+export type ErrorOptions = Partial<
+  Record<ErrorCode, ErrorSeverity | null | undefined>
+>
 
 /**
  * Configuration.
  */
-export type Options = {
+export interface Options extends ErrorOptions, FromParse5Options {
   /**
    * The `file` field from `hast-util-from-parse5` is not supported.
    */
@@ -44,7 +46,7 @@ export type Options = {
    * In document mode, unopened `html`, `head`, and `body` elements are opened
    * in just the right places.
    */
-  fragment?: boolean | undefined
+  fragment?: boolean | null | undefined
   /**
    * Call `onerror` with parse errors while parsing (optional).
    *
@@ -57,6 +59,5 @@ export type Options = {
    * that rules emit as warnings.
    * Rules can also be configured with `2`, to turn them into fatal errors.
    */
-  onerror?: OnError | undefined
-} & ErrorOptions &
-  FromParse5Options
+  onerror?: OnError | null | undefined
+}
