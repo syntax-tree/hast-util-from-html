@@ -1,6 +1,6 @@
 {
   "name": "hast-util-from-html",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "hast utility to parse from HTML",
   "license": "MIT",
   "keywords": [
