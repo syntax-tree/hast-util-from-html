@@ -1,14 +1,11 @@
 # hast-util-from-html
 
-[![Build][build-badge]][build]
-[![Coverage][coverage-badge]][coverage]
-[![Downloads][downloads-badge]][downloads]
-[![Size][size-badge]][size]
-[![Sponsors][sponsors-badge]][collective]
-[![Backers][backers-badge]][collective]
-[![Chat][chat-badge]][chat]
+[![Build][badge-build-image]][badge-build-url]
+[![Coverage][badge-coverage-image]][badge-coverage-url]
+[![Downloads][badge-downloads-image]][badge-downloads-url]
+[![Size][badge-size-image]][badge-size-url]
 
-[hast][] utility that turns HTML into a syntax tree.
+[hast][github-hast] utility that turns HTML into a syntax tree.
 
 ## Contents
 
@@ -27,7 +24,6 @@
   * [Example: whitespace around and inside `<html>`](#example-whitespace-around-and-inside-html)
   * [Example: parse errors](#example-parse-errors)
 * [Syntax](#syntax)
-* [Types](#types-2)
 * [Compatibility](#compatibility)
 * [Security](#security)
 * [Related](#related)
@@ -43,37 +39,36 @@ tree.
 
 If you want to handle syntax trees manually, use this.
 
-Use [`parse5`][parse5] instead when you just want to parse HTML and don’t care
-about [hast][].
-You can also use [`hast-util-from-parse5`][hast-util-from-parse5] and
-[`parse5`][parse5] yourself, or use the rehype plugin
-[`rehype-parse`][rehype-parse], which wraps this utility to also parse HTML at
-a higher-level (easier) abstraction.
-[`xast-util-from-xml`][xast-util-from-xml] can be used if you are dealing with
-XML instead of HTML.
+Use [`parse5`][github-parse5] instead when you just want to parse HTML and
+don’t care about [hast][github-hast].
+You can also use
+[`hast-util-from-parse5`][github-hast-util-from-parse5] and
+[`parse5`][github-parse5] yourself,
+or use the rehype plugin [`rehype-parse`][github-rehype-parse],
+which wraps this utility to also parse HTML at a higher-level (easier)
+abstraction.
+[`xast-util-from-xml`][github-xast-util-from-xml] can be used if you are
+dealing with XML instead of HTML.
 
-If you might run in a browser and prefer a ligher alternative, while not caring
-about positional info, parse errors, and consistency across browsers, use
-[`hast-util-from-html-isomorphic`][hast-util-from-html-isomorphic], which
-wraps this in Node and uses browser APIs otherwise.
+If you might run in a browser and prefer a lighter alternative,
+while not caring about positional info, parse errors, and consistency across
+browsers,
+use
+[`hast-util-from-html-isomorphic`][github-hast-util-from-html-isomorphic],
+which wraps this in Node and uses browser APIs otherwise.
 
-Finally you can use the utility [`hast-util-to-html`][hast-util-to-html] for
-the inverse of this utility.
+Finally you can use the utility
+[`hast-util-to-html`][github-hast-util-to-html] for the inverse of this
+utility.
 It turns hast into HTML.
 
 ## Install
 
-This package is [ESM only][esm].
-In Node.js (version 16+), install with [npm][]:
+This package is [ESM only][github-gist-esm].
+In Node.js (version 16+), install with [npm][npmjs-install]:
 
 ```sh
 npm install hast-util-from-html
-```
-
-In Deno with [`esm.sh`][esmsh]:
-
-```js
-import {fromHtml} from 'https://esm.sh/hast-util-from-html@2'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
@@ -120,6 +115,12 @@ Yields:
 
 This package exports the identifier [`fromHtml`][api-from-html].
 There is no default export.
+It exports the additional [TypeScript][] types
+[`ErrorCode`][api-error-code],
+[`ErrorSeverity`][api-error-severity],
+[`OnError`][api-on-error],
+and
+[`Options`][api-options].
 
 ### `fromHtml(value[, options])`
 
@@ -127,14 +128,14 @@ Turn serialized HTML into a hast tree.
 
 ###### Parameters
 
-* `value` ([`Compatible`][compatible])
+* `value` ([`Compatible`][github-vfile-compatible])
   — serialized HTML to parse
 * `options` ([`Options`][api-options], optional)
   — configuration
 
 ###### Returns
 
-Tree ([`Root`][root]).
+Tree ([`Root`][github-hast-root]).
 
 ### `ErrorCode`
 
@@ -170,11 +171,11 @@ export type ErrorSeverity =
 
 ### `OnError`
 
-Function called when encountering [HTML parse errors][parse-errors].
+Function called when encountering [HTML parse errors][whatwg-parse-errors].
 
 ###### Parameters
 
-* `error` ([`VFileMessage`][vfile-message])
+* `error` ([`VFileMessage`][github-vfile-message])
   — message
 
 ###### Returns
@@ -199,7 +200,7 @@ exiting it.
 > It supports SVG as embedded in HTML.
 > It does not support the features available in XML.
 > Passing SVG files might break but fragments of modern SVG should be fine.
-> Use [`xast-util-from-xml`][xast-util-from-xml] to parse XML.
+> Use [`xast-util-from-xml`][github-xast-util-from-xml] to parse XML.
 
 > 👉 **Note**: make sure to set `fragment: true` if `space: 'svg'`.
 
@@ -216,7 +217,7 @@ In document mode, unopened `html`, `head`, and `body` elements are opened.
 
 ###### `options.onerror`
 
-Function called when encountering [HTML parse errors][parse-errors]
+Function called when encountering [HTML parse errors][whatwg-parse-errors]
 ([`OnError`][api-on-error], optional).
 
 ###### `options[key in ErrorCode]`
@@ -357,7 +358,7 @@ console.log(inspect(fromHtml(doc)))
 
 …yields:
 
-```txt
+```text
 root[2] (1:1-9:8, 0-119)
 │ data: {"quirksMode":false}
 ├─0 doctype (1:1-1:16, 0-15)
@@ -387,9 +388,10 @@ root[2] (1:1-9:8, 0-119)
 This behavior is described by the HTML standard (see the section 13.2.6.4.1
 “The ‘initial’ insertion mode” and adjacent states) which we follow.
 
-The changes to this meaningless whitespace should not matter, except when
-formatting markup, in which case [`rehype-format`][rehype-format] can be used to
-improve the source code.
+The changes to this meaningless whitespace should not matter,
+except when formatting markup,
+in which case [`rehype-format`][github-rehype-format] can be used to improve
+the source code.
 
 ### Example: parse errors
 
@@ -411,7 +413,7 @@ fromHtml(doc, {
 
 …yields:
 
-```txt
+```text
 [1:10-1:10: Missing whitespace before doctype name] {
   ancestors: undefined,
   cause: undefined,
@@ -461,13 +463,6 @@ fromHtml(doc, {
 HTML is parsed according to WHATWG HTML (the living standard), which is also
 followed by browsers such as Chrome and Firefox.
 
-## Types
-
-This package is fully typed with [TypeScript][].
-It exports the additional types
-[`ErrorCode`][api-error-code], [`ErrorSeverity`][api-error-severity],
-[`OnError`][api-on-error], and [`Options`][api-options].
-
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with maintained
@@ -481,114 +476,105 @@ compatible with Node.js 16.
 ## Security
 
 Parsing HTML is safe but using user-provided content can open you up to a
-[cross-site scripting (XSS)][xss] attack.
-Use [`hast-util-santize`][hast-util-sanitize] to make the hast tree safe.
+[cross-site scripting (XSS)][wikipedia-xss] attack.
+Use [`hast-util-sanitize`][github-hast-util-sanitize] to make the hast tree
+safe.
 
 ## Related
 
-* [`hast-util-to-html`](https://github.com/syntax-tree/hast-util-to-html)
+* [`hast-util-to-html`][github-hast-util-to-html]
   — serialize hast
-* [`hast-util-sanitize`](https://github.com/syntax-tree/hast-util-sanitize)
+* [`hast-util-sanitize`][github-hast-util-sanitize]
   — sanitize hast
-* [`xast-util-from-xml`][xast-util-from-xml]
+* [`xast-util-from-xml`][github-xast-util-from-xml]
   — parse XML
 
 ## Contribute
 
-See [`contributing.md`][contributing] in [`syntax-tree/.github`][health] for
-ways to get started.
-See [`support.md`][support] for ways to get help.
+See [`contributing.md`][health-contributing] in [`syntax-tree/.github`][health]
+for ways to get started.
+See [`support.md`][health-support] for ways to get help.
 
-This project has a [code of conduct][coc].
+This project has a [code of conduct][health-coc].
 By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
 
-[MIT][license] © [Titus Wormer][author]
+[MIT][file-license] © [Titus Wormer][wooorm]
 
 <!-- Definitions -->
-
-[build-badge]: https://github.com/syntax-tree/hast-util-from-html/workflows/main/badge.svg
-
-[build]: https://github.com/syntax-tree/hast-util-from-html/actions
-
-[coverage-badge]: https://img.shields.io/codecov/c/github/syntax-tree/hast-util-from-html.svg
-
-[coverage]: https://codecov.io/github/syntax-tree/hast-util-from-html
-
-[downloads-badge]: https://img.shields.io/npm/dm/hast-util-from-html.svg
-
-[downloads]: https://www.npmjs.com/package/hast-util-from-html
-
-[size-badge]: https://img.shields.io/badge/dynamic/json?label=minzipped%20size\&query=$.size.compressedSize\&url=https://deno.bundlejs.com/?q=hast-util-from-html
-
-[size]: https://bundlejs.com/?q=hast-util-from-html
-
-[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
-
-[backers-badge]: https://opencollective.com/unified/backers/badge.svg
-
-[collective]: https://opencollective.com/unified
-
-[chat-badge]: https://img.shields.io/badge/chat-discussions-success.svg
-
-[chat]: https://github.com/syntax-tree/unist/discussions
-
-[npm]: https://docs.npmjs.com/cli/install
-
-[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
-
-[esmsh]: https://esm.sh
-
-[typescript]: https://www.typescriptlang.org
-
-[license]: license
-
-[author]: https://wooorm.com
-
-[health]: https://github.com/syntax-tree/.github
-
-[contributing]: https://github.com/syntax-tree/.github/blob/main/contributing.md
-
-[support]: https://github.com/syntax-tree/.github/blob/main/support.md
-
-[coc]: https://github.com/syntax-tree/.github/blob/main/code-of-conduct.md
-
-[xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
-
-[hast]: https://github.com/syntax-tree/hast
-
-[root]: https://github.com/syntax-tree/hast#root
-
-[hast-util-sanitize]: https://github.com/syntax-tree/hast-util-sanitize
-
-[hast-util-from-parse5]: https://github.com/syntax-tree/hast-util-from-parse5
-
-[hast-util-to-html]: https://github.com/syntax-tree/hast-util-to-html
-
-[xast-util-from-xml]: https://github.com/syntax-tree/xast-util-from-xml
-
-[rehype-parse]: https://github.com/rehypejs/rehype/tree/main/packages/rehype-parse#readme
-
-[rehype-format]: https://github.com/rehypejs/rehype-format
-
-[parse5]: https://github.com/inikulin/parse5
-
-[parse-errors]: https://html.spec.whatwg.org/multipage/parsing.html#parse-errors
-
-[vfile-message]: https://github.com/vfile/vfile-message#vfilemessagereason-place-origin
-
-[hast-util-from-html-isomorphic]: https://github.com/syntax-tree/hast-util-from-html-isomorphic
-
-[compatible]: https://github.com/vfile/vfile#compatible
-
-[api-from-html]: #fromhtmlvalue-options
 
 [api-error-code]: #errorcode
 
 [api-error-severity]: #errorseverity
 
+[api-from-html]: #fromhtmlvalue-options
+
 [api-on-error]: #onerror
 
 [api-options]: #options
+
+[badge-build-image]: https://github.com/syntax-tree/hast-util-from-html/workflows/main/badge.svg
+
+[badge-build-url]: https://github.com/syntax-tree/hast-util-from-html/actions
+
+[badge-coverage-image]: https://img.shields.io/codecov/c/github/syntax-tree/hast-util-from-html.svg
+
+[badge-coverage-url]: https://codecov.io/github/syntax-tree/hast-util-from-html
+
+[badge-downloads-image]: https://img.shields.io/npm/dm/hast-util-from-html.svg
+
+[badge-downloads-url]: https://www.npmjs.com/package/hast-util-from-html
+
+[badge-size-image]: https://img.shields.io/bundlejs/size/hast-util-from-html
+
+[badge-size-url]: https://bundlejs.com/?q=hast-util-from-html
+
+[esmsh]: https://esm.sh
+
+[file-license]: license
+
+[github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[github-hast]: https://github.com/syntax-tree/hast
+
+[github-hast-root]: https://github.com/syntax-tree/hast#root
+
+[github-hast-util-from-html-isomorphic]: https://github.com/syntax-tree/hast-util-from-html-isomorphic
+
+[github-hast-util-from-parse5]: https://github.com/syntax-tree/hast-util-from-parse5
+
+[github-hast-util-sanitize]: https://github.com/syntax-tree/hast-util-sanitize
+
+[github-hast-util-to-html]: https://github.com/syntax-tree/hast-util-to-html
+
+[github-parse5]: https://github.com/inikulin/parse5
+
+[github-rehype-format]: https://github.com/rehypejs/rehype-format
+
+[github-rehype-parse]: https://github.com/rehypejs/rehype/tree/main/packages/rehype-parse#readme
+
+[github-vfile-compatible]: https://github.com/vfile/vfile#compatible
+
+[github-vfile-message]: https://github.com/vfile/vfile-message#vfilemessagereason-place-origin
+
+[github-xast-util-from-xml]: https://github.com/syntax-tree/xast-util-from-xml
+
+[health]: https://github.com/syntax-tree/.github
+
+[health-coc]: https://github.com/syntax-tree/.github/blob/main/code-of-conduct.md
+
+[health-contributing]: https://github.com/syntax-tree/.github/blob/main/contributing.md
+
+[health-support]: https://github.com/syntax-tree/.github/blob/main/support.md
+
+[npmjs-install]: https://docs.npmjs.com/cli/install
+
+[typescript]: https://www.typescriptlang.org
+
+[whatwg-parse-errors]: https://html.spec.whatwg.org/multipage/parsing.html#parse-errors
+
+[wikipedia-xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
+
+[wooorm]: https://wooorm.com
