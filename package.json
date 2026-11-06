@@ -1,35 +1,8 @@
 {
-  "name": "hast-util-from-html",
-  "version": "2.0.3",
-  "description": "hast utility to parse from HTML",
-  "license": "MIT",
-  "keywords": [
-    "unist",
-    "hast",
-    "hast-util",
-    "util",
-    "utility",
-    "html",
-    "parse",
-    "tokenize"
-  ],
-  "repository": "syntax-tree/hast-util-from-html",
-  "bugs": "https://github.com/syntax-tree/hast-util-from-html/issues",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/unified"
-  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "bugs": "https://github.com/syntax-tree/hast-util-from-html/issues",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
-  ],
-  "sideEffects": false,
-  "type": "module",
-  "exports": "./index.js",
-  "files": [
-    "lib/",
-    "index.d.ts",
-    "index.js"
   ],
   "dependencies": {
     "@types/hast": "^3.0.0",
@@ -39,6 +12,7 @@
     "vfile": "^6.0.0",
     "vfile-message": "^4.0.0"
   },
+  "description": "hast utility to parse from HTML",
   "devDependencies": {
     "@types/mdast": "^4.0.0",
     "@types/node": "^26.0.0",
@@ -55,14 +29,28 @@
     "unist-builder": "^4.0.0",
     "xo": "^5.0.0"
   },
-  "scripts": {
-    "prepack": "npm run build && npm run format",
-    "build": "tsc --build --clean && tsc --build && type-coverage",
-    "format": "remark . -qfo && prettier . -w --log-level warn && xo --fix",
-    "test-api": "node --conditions development test/index.js",
-    "test-coverage": "c8 --100 --reporter lcov npm run test-api",
-    "test": "npm run build && npm run format && npm run test-coverage"
+  "exports": "./index.js",
+  "files": [
+    "lib/",
+    "index.d.ts",
+    "index.js"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
   },
+  "keywords": [
+    "hast-util",
+    "hast",
+    "html",
+    "parse",
+    "tokenize",
+    "unist",
+    "utility",
+    "util"
+  ],
+  "license": "MIT",
+  "name": "hast-util-from-html",
   "prettier": {
     "bracketSpacing": false,
     "semi": false,
@@ -81,10 +69,20 @@
       "./script/parse-error.js"
     ]
   },
+  "repository": "syntax-tree/hast-util-from-html",
+  "scripts": {
+    "build": "tsc --build --clean && tsc --build && type-coverage",
+    "format": "remark --frail --output --quiet -- . && prettier --log-level warn --write -- . && xo --fix",
+    "prepack": "npm run build && npm run format",
+    "test-api": "node --conditions development test/index.js",
+    "test-coverage": "c8 --100 --reporter lcov -- npm run test-api",
+    "test": "npm run build && npm run format && npm run test-coverage"
+  },
+  "sideEffects": false,
   "typeCoverage": {
     "atLeast": 100,
-    "detail": true,
-    "ignoreCatch": true,
     "strict": true
-  }
+  },
+  "type": "module",
+  "version": "2.0.3"
 }
