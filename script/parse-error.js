@@ -26,9 +26,15 @@ const ignoreFixture = {
   surrogateInInputStream: true
 }
 
-/** @satisfies {Plugin<[], Root>} */
+/**
+ * Generate the list of parse errors in the readme.
+ *
+ * @satisfies {Plugin<[], Root>}
+ */
 export default function remarkParseErrors() {
   /**
+   * Transform.
+   *
    * @param {Root} tree
    *   Tree to transform.
    * @returns {undefined}

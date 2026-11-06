@@ -521,7 +521,7 @@ abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/hast-util-from-html
 
-[size-badge]: https://img.shields.io/badge/dynamic/json?label=minzipped%20size&query=$.size.compressedSize&url=https://deno.bundlejs.com/?q=hast-util-from-html
+[size-badge]: https://img.shields.io/badge/dynamic/json?label=minzipped%20size\&query=$.size.compressedSize\&url=https://deno.bundlejs.com/?q=hast-util-from-html
 
 [size]: https://bundlejs.com/?q=hast-util-from-html
 

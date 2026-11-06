@@ -91,6 +91,7 @@ test('fromHtml', async function (t) {
       {
         column: 1,
         fatal: false,
+        file: '',
         message: 'Missing doctype before other content',
         line: 1,
         name: '1:1-1:1',
@@ -119,7 +120,7 @@ test('fromHtml', async function (t) {
         missingDoctype: 0
       })
 
-      assert.deepEqual(JSON.stringify(values), undefined)
+      assert.equal(JSON.stringify(values), undefined)
     }
   )
 
@@ -136,7 +137,7 @@ test('fromHtml', async function (t) {
         missingDoctype: false
       })
 
-      assert.deepEqual(JSON.stringify(values), undefined)
+      assert.equal(JSON.stringify(values), undefined)
     }
   )
 
@@ -155,6 +156,7 @@ test('fromHtml', async function (t) {
       {
         column: 3,
         fatal: false,
+        file: '',
         message: 'Unexpected unknown named character reference',
         line: 1,
         name: '1:3-1:3',
@@ -188,6 +190,7 @@ test('fromHtml', async function (t) {
         {
           column: 5,
           fatal: false,
+          file: '',
           message: 'Unexpected slash at end of closing tag',
           line: 1,
           name: '1:5-1:5',
@@ -222,6 +225,7 @@ test('fromHtml', async function (t) {
         {
           column: 2,
           fatal: false,
+          file: '',
           message: 'Invalid first character in tag name',
           line: 1,
           name: '1:2-1:2',
@@ -256,6 +260,7 @@ test('fromHtml', async function (t) {
         {
           column: 1,
           fatal: false,
+          file: '',
           message: 'Unexpected NULL character',
           line: 1,
           name: '1:1-1:1',
