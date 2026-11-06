@@ -148,7 +148,7 @@ type ErrorCode =
   | 'abandonedHeadElementChild'
   | 'abruptClosingOfEmptyComment'
   | 'abruptDoctypePublicIdentifier'
-  // … see readme on `options[key in ErrorCode]` above.
+  // … see readme on `options[key in ErrorCode]` below.
 ```
 
 ### `ErrorSeverity`
