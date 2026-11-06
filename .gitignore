@@ -1,11 +1,11 @@
 .DS_Store
-*.d.ts.map
 *.d.ts
 *.log
+*.map
 *.tsbuildinfo
 coverage/
 node_modules/
+test/error-codes-from-p5.js
 yarn.lock
-/test/error-codes-from-p5.js
-!/lib/types.d.ts
 !/index.d.ts
+!/lib/types.d.ts
