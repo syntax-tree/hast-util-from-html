@@ -8,6 +8,6 @@ jobs:
 name: bb
 on:
   issues:
-    types: [closed, edited, labeled, opened, reopened, edited, labeled, unlabeled]
+    types: [closed, edited, labeled, opened, reopened, unlabeled]
   pull_request_target:
-    types: [closed, edited, labeled, opened, reopened, edited, labeled, unlabeled]
+    types: [closed, edited, labeled, opened, reopened, unlabeled]
