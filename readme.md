@@ -419,6 +419,7 @@ fromHtml(doc, {
   cause: undefined,
   column: 10,
   fatal: true,
+  file: '',
   line: 1,
   place: {
     start: { line: 1, column: 10, offset: 9 },
@@ -427,6 +428,8 @@ fromHtml(doc, {
   reason: 'Missing whitespace before doctype name',
   ruleId: 'missing-whitespace-before-doctype-name',
   source: 'hast-util-from-html',
+  actual: undefined,
+  expected: undefined,
   note: 'Unexpected `h`. Expected ASCII whitespace instead',
   url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-missing-whitespace-before-doctype-name'
 }
@@ -435,6 +438,7 @@ fromHtml(doc, {
   cause: undefined,
   column: 23,
   fatal: false,
+  file: '',
   line: 2,
   place: {
     start: { line: 2, column: 23, offset: 37 },
@@ -443,6 +447,8 @@ fromHtml(doc, {
   reason: 'Unexpected duplicate attribute',
   ruleId: 'duplicate-attribute',
   source: 'hast-util-from-html',
+  actual: undefined,
+  expected: undefined,
   note: 'Unexpectedly double attribute. Expected attributes to occur only once',
   url: 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-duplicate-attribute'
 }
